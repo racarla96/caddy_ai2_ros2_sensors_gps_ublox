@@ -1,0 +1,6 @@
+# u-blox M8 — parámetros de integración. La pose de montaje y frame_id viven en
+# caddy_ai2_ros2_description/bringup/config/robot_params.yaml (type: gps_ublox, pendiente de medir).
+real:
+  topic: ublox/fix
+  frame_id: gps_ublox_link
+  rate_hz: 5

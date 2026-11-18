@@ -1,0 +1,4 @@
+# Symlink estable /dev/ublox para el GPS u-blox M8 adicional (USB 1546:01a8).
+# El GNSS integrado de la ZED Box (1546:01a9) NO se toca: lo usa el wrapper de la ZED.
+# Los ttyACMx cambian de número según el orden de arranque, por eso se identifica por idProduct.
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1546", ATTRS{idProduct}=="01a8", SYMLINK+="ublox", MODE="0666", GROUP="dialout"

@@ -1,0 +1,24 @@
+{#-
+  Fragmento URDF del GPS u-blox M8: enlace + unión fija a base_link.
+  Solo hardware real (no hay modelo Gazebo: la simulación usa los navsat de Gazebo/MVSim).
+
+  Variables obligatorias:
+    prefix, sensor_name, frame_id, x, y, z, roll, pitch, yaw  (pose respecto a base_link)
+  La pose es la de la ANTENA, no la del receptor.
+#}
+  <link name="{{ prefix }}{{ frame_id }}">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.05"/>
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+    </inertial>
+    <visual>
+      <geometry><cylinder radius="0.025" length="0.015"/></geometry>
+    </visual>
+  </link>
+
+  <joint name="{{ prefix }}{{ sensor_name }}_joint" type="fixed">
+    <parent link="{{ prefix }}base_link"/>
+    <child link="{{ prefix }}{{ frame_id }}"/>
+    <origin xyz="{{ x }} {{ y }} {{ z }}" rpy="{{ roll }} {{ pitch }} {{ yaw }}"/>
+  </joint>
