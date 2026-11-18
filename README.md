@@ -14,8 +14,10 @@ Es solo configuración, regla udev, lanzador y fragmento de descripción sobre e
 | Paquete (config, udev, launch, URDF) | escrito, **sin probar con el nodo** |
 | Fix | ⏳ sin cielo no hay satélites (0 en GPS/GLONASS/Galileo); probar a cielo abierto |
 
-Tres fuentes de posición conviven, cada una con su topic: el GPS del SBG IG-500N (LattePanda), este u-blox y el GNSS integrado de la ZED Box
-(`1546:01a9`, lo usa el wrapper de la ZED: **no abrir ese puerto**). Cuál entra en el EKF se decide al probarlas en el vehículo.
+**Papel:** receptor **secundario**. La fuente de posición principal es el GPS del **SBG IG-500N** (LattePanda); este u-blox queda para
+comparar y como redundancia, y **no entra en el EKF por defecto**. Si más adelante se fusiona, se decide al probarlo en el vehículo
+(`navsat_transform_node` admite un solo `NavSatFix` de entrada, así que habría que elegir uno o promediarlos antes).
+Tampoco es el GNSS integrado de la ZED Box (`1546:01a9`), que usa el wrapper de la ZED: **no abrir ese puerto**.
 
 ## Instalar (una vez, en la ZED Box)
 
@@ -51,5 +53,5 @@ Alternativa de diagnóstico sin ROS: `timeout 5 cat /dev/ublox` y mirar la sente
 - Probar el nodo en la ZED Box: los nombres de parámetros están verificados contra el binario del driver, pero no se ha ejecutado contra el receptor.
 - Sacar la antena a cielo abierto y confirmar fix y tasa real.
 - Medir la pose de la antena en el vehículo y añadir `gps_ublox` a `robot_params.yaml` (el fragmento `description/sensor.urdf.j2` está listo).
-- Decidir qué fuente entra en `navsat_transform_node` / EKF.
+- Decidir si este receptor se usa solo para comparar con el SBG o también para redundancia en el EKF.
 - Arranque automático (systemd), junto con el resto de sensores de la Jetson.
