@@ -35,7 +35,6 @@ def generate_launch_description():
             ('fix_velocity', 'ublox/fix_velocity'),
             ('navpvt', 'ublox/navpvt'),
             ('navstatus', 'ublox/navstatus'),
-            ('navsvinfo', 'ublox/navsvinfo'),
             ('monhw', 'ublox/monhw'),
         ])
 

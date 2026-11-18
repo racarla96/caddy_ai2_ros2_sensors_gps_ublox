@@ -1,4 +1,4 @@
-# u-blox M8 (UBX-M8030, FW 3.01) conectado por USB CDC-ACM — parámetros del nodo ublox_gps.
+# u-blox NEO-M8P-2 (el driver lo identifica con firmware HPG 1.40 REF, protocolo 20.30) por USB CDC-ACM — parámetros del nodo ublox_gps.
 # Receptor adicional de la ZED Box (el GNSS integrado de la ZED Box es otro dispositivo, 1546:01a9).
 #
 # No se guarda nada en la memoria del receptor (sin `save`): la configuración es volátil y se
@@ -8,10 +8,12 @@ ublox_gps_node:
     device: /dev/ublox          # regla udev udev/99-ublox.rules (idProduct 01a8)
     frame_id: gps_ublox_link    # mismo frame que el fragmento de descripción
     config_on_startup: true
-    rate: 5                     # Hz de medida (GPS+GLONASS en M8 admite hasta 10 Hz)
+    rate: 5.0                     # Hz de medida (GPS+GLONASS en M8 admite hasta 10 Hz)
     nav_rate: 1                 # una solución por medida
     dynamic_model: automotive   # vehículo terrestre
     fix_mode: auto
+    tmode3: 0                   # el receptor es un NEO-M8P-2 con firmware HPG REF (base RTK): el driver exige este
+                                # parámetro; 0 = modo base desactivado (receptor normal, sin survey-in)
     uart1:
       baudrate: 115200
     gnss:
@@ -28,7 +30,6 @@ ublox_gps_node:
       nav:
         pvt: true               # lo que usa el nodo para NavSatFix, velocidad y hora
         status: true
-        svinfo: true            # satélites visibles y su relación señal/ruido, útil al depurar sin fix
       aid:
         hui: false
       mon:
